@@ -1,0 +1,20 @@
+{
+  "name": "100974597_comp3123_assignmet1",
+  "version": "1.0.0",
+  "description": "assig1",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "module",
+    "nodejs",
+    "js",
+    "http",
+    "fs",
+    "events"
+  ],
+  "author": "Camila Lee",
+  "license": "ISC"
+}
