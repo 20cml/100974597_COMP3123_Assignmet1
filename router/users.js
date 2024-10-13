@@ -8,7 +8,7 @@ router.post('/signup', async (req, res) => {
     const userData = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).send({ message: "Bad request, validation errors." });
+        return res.status(400).send({ message: "bad request, validation errors." });
     }
 
     try {
@@ -19,16 +19,15 @@ router.post('/signup', async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(userData.password, 10);
 
-        const newUser = new User({
-            ...userData,
+        const newUser = new User({...userData,
             password: hashedPassword,
         });
 
         await newUser.save();
-        res.status(201).send({ message: "User created successfully." });
+        res.status(201).send({ message: "user created successfully." });
     } catch (err) {
         console.error("Error occurred:", err);
-        res.status(500).send({ message: "Internal server error." });
+        res.status(500).send({ message: "internal server error." });
     }
 });
 
@@ -37,24 +36,24 @@ router.post('/login', async (req, res) => {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).send({ message: "Bad request, validation errors." });
+        return res.status(400).send({ message: "bad request, validation errors." });
     }
 
     try {
         const user = await User.findOne({ username: loginData.username });
         if (!user) {
-            return res.status(401).send({ message: "Invalid username or password." });
+            return res.status(401).send({ message: "invalid username or password." });
         }
 
         const match = await bcrypt.compare(loginData.password, user.password);
         if (!match) {
-            return res.status(401).send({ message: "Invalid username or password." });
+            return res.status(401).send({ message: "invalid username or password." });
         }
 
-        res.status(200).send({ message: "Login successful." });
+        res.status(200).send({ message: "login successful." });
     } catch (err) {
         console.error("Error occurred:", err);
-        res.status(500).send({ message: "Internal server error." });
+        res.status(500).send({ message: "internal server error." });
     }
 });
 

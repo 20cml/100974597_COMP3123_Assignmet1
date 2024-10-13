@@ -8,11 +8,17 @@ const SERVER_PORT = process.env.PORT || 3003;
 
 app.get('/', (req, res) => {
     res.send('hello, professor Pritesh! This is the root route.');
-  });
+});
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
   
-  app.listen(port, () => {
+  
+app.listen(SERVER_PORT, () => {
     console.log(`Server is running on port ${SERVER_PORT}`);
-  });
+});
 
 const DB_CONNECTION_STRING = "mongodb+srv://leecamila20:LCtDwgIpW8RSB27S@cluster0.81oph.mongodb.net/comp3123_assignment1?retryWrites=true&w=majority&appName=Cluster0"
 mongoose.connect(DB_CONNECTION_STRING, {
