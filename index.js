@@ -6,6 +6,14 @@ const errorHandlerMiddleware = require('./errorHandlerMiddleware');
 const app = express();
 const SERVER_PORT = process.env.PORT || 3003;
 
+app.get('/', (req, res) => {
+    res.send('hello, professor Pritesh! This is the root route.');
+  });
+  
+  app.listen(port, () => {
+    console.log(`Server is running on port ${SERVER_PORT}`);
+  });
+
 const DB_CONNECTION_STRING = "mongodb+srv://leecamila20:LCtDwgIpW8RSB27S@cluster0.81oph.mongodb.net/comp3123_assignment1?retryWrites=true&w=majority&appName=Cluster0"
 mongoose.connect(DB_CONNECTION_STRING, {
     useNewUrlParser: true,
