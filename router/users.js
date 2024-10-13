@@ -3,6 +3,7 @@ const { body, validationResult } = require('express-validator');
 const User = require('../models/users'); 
 const router = express.Router();
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 
 router.post('/signup', async (req, res) => {
     const userData = req.body;

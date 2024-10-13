@@ -2,6 +2,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const EmployeeModel = require('../models/employees');
 const router = express.Router();
+const mongoose = require('mongoose');
 
 router.get("/employees", (req, res) => {
     EmployeeModel.find()
@@ -28,13 +29,18 @@ router.post("/employees", (req, res) => {
 });
 
 router.get("/employees/:eid", (req, res) => {
-    EmployeeModel.findById(req.params.eid)
+    const { eid } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(eid)) {
+        return res.status(400).send({ message: "missing character" });
+    }
+
+    EmployeeModel.findById(eid)
         .then((employee) => {
             if (employee) {
-                res.send(employee);
-            } else {
-                res.status(404).send({ message: "employee not found" });
+                return res.send(employee);
             }
+            throw new Error("employee not found");
         })
         .catch((err) => {
             res.status(500).send({ message: err.message });
@@ -42,27 +48,36 @@ router.get("/employees/:eid", (req, res) => {
 });
 
 router.put("/employees/:eid", (req, res) => {
-    EmployeeModel.findByIdAndUpdate(req.params.eid, req.body, { new: true })
+    const { eid } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(eid)) {
+        return res.status(400).send({ message: "missing character" });
+    }
+
+    EmployeeModel.findByIdAndUpdate(eid, req.body, { new: true })
         .then((employee) => {
             if (employee) {
-                res.status(200).send({ message: "employee details updated successfully." });
-            } else {
-                res.status(404).send({ message: "employee not found." });
-            }
+                res.status(200).send({ message: "employee details updated successfully!", employee });
+            } 
+            throw new Error("employee not found");
         })
         .catch((err) => {
             res.status(500).send({ message: err.message });
         });
 });
 
+
 router.delete("/employees/:eid", (req, res) => {
-    EmployeeModel.findByIdAndDelete(req.params.eid)
+    const { eid } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(eid)) {
+        return res.status(400).send({ message: "missing character" });
+    }
+
+    EmployeeModel.findByIdAndDelete(eid)
         .then((employee) => {
             if (employee) {
                 res.status(200).send({ message: "employee deleted successfully." });
-            } else {
-                res.status(404).send({ message: "employee not found." });
-            }
+            } 
+            throw new Error("employee not found");
         })
         .catch((err) => {
             res.status(500).send({ message: err.message });
