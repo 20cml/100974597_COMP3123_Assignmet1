@@ -10,8 +10,6 @@ const employeeSchema = new mongoose.Schema({
     department: { type: String, required: true },
 });
 
-
-
 const Employee = mongoose.model('Employee', employeeSchema);
 
 module.exports = Employee;
