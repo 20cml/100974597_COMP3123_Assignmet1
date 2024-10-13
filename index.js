@@ -31,13 +31,6 @@ app.use(loggerMiddleware);
 app.use('/u', userRouter); 
 app.use('/e', empRouter);
 
-//error end point
-// http://localhost:3003/error
-//app.get('/error', (req, res) => {
-//    throw new Error('This is a forced error');
-//    res.send('Welcome to Express error handling');
-//})
-
 //error handling middleware
 app.use(errorHandlerMiddleware);
 
